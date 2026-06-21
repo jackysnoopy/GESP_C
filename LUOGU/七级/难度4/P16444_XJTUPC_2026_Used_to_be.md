@@ -1,0 +1,152 @@
+# [XJTUPC 2026] Used to be
+
+## 题目描述
+
+> "Who am I...?"
+
+这是一个关于记忆的故事。故事的主角之一，是一个长为 $m$ 的 01 串。
+
+故事的第一层，是变化。
+
+故事穿行于 $n-1$ 个节点间。每经过一个节点，主角都会受到微妙的影响：它可能保持不变，抑或在某一位上发生翻转。这些变化不断累积，最终的串也许和最初判若两人。
+
+故事的第二层，是遗忘。
+
+曾经，剧本上记录着主角最初的状态，以及经过每个节点后的状态。然而，随着岁月的流逝，书页上一些位置的字迹渐渐模糊，化作无法辨认的 `?`。
+
+故事的第三层，是追寻。
+
+另一群主角------你们，找到了这份尘封的记录。尽管你们可能无法确定唯一的真相，你们仍然希望拼凑出一份可能的原貌，复现你们心中的故事。
+
+> "Make her story complete."
+>
+> "I know... you will not disappoint me."
+
+**形式化题意**
+
+给定 $n$ 个长度恰为 $m$ 的字符串 $S_1,S_2,\cdots, S_n$。字符串 $S_i$ 仅包含字符 $\texttt{0}$，$\texttt{1}$ 和 $\texttt{?}$。
+
+判断是否存在一种将每一个 $\texttt{?}$ 分别替换为  $\texttt{0}$ 或 $\texttt{1}$ 的方案，使得相邻两个字符串不同的位置至多有一位。即在替换后，对于任意的 $i$（$1\le i\le n-1$），第 $i$ 个字符串 $S_i=a_1a_2\cdots a_m$ 和第 $i+1$ 个字符串 $S_{i+1}=b_1b_2\cdots b_m$ 满足下面条件的任意一个：
+
+- 对于任意的 $j$（$1\le j\le m$），有 $a_j=b_j$；
+- 存在一个 $x$（$1\le x\le m$），使得 $a_x\ne b_x$ 且对于任意的 $j$（$1\le j\le m$ 且 $x\ne j$），有 $a_j=b_j$。
+
+若存在，请输出一种满足要求的方案。如果存在多种方案，输出任意一种即可。
+
+## 输入格式
+
+**本题包含多组测试用例**。输入的第一行，包含一个正整数 $T$（$1\le T\le 10^5$），表示测试用例的数量。
+
+接下来是 $T$ 组测试用例的描述。
+
+每个测试用例的第一行，包含两个正整数 $n$ 和 $m$（$1 \le n\cdot m \le 10^6$），用一个空格分隔，分别表示字符串的数量与字符串的长度。
+
+接下来 $n$ 行，第 $i$ 行包含一个长度恰为 $m$ 的字符串 $S_i$。保证字符串 $S_i$ 仅包含字符 $\texttt{0}$，$\texttt{1}$ 和 $\texttt{?}$。
+
+保证所有测试用例中 $n\cdot m$ 的总和不超过 $10^6$。
+
+## 输出格式
+
+对于每个测试用例，如果不存在满足要求的方案，输出一行，仅包含一个字符串 $\tt{No}$。
+
+否则，输出 $n+1$ 行，其中：
+
+- 第一行包含一个字符串 $\tt{Yes}$；
+- 接下来 $n$ 行，第 $i$ 行包含一个长度恰为 $m$ 的字符串，字符串中仅包含字符 $\texttt{0}$ 和 $\texttt{1}$，表示构造的方案中第 $i$ 个字符串。
+
+如果存在多种满足要求的方案，输出任意一种即可。
+
+答案对大小写不敏感。例如 $\tt{yEs}$，$\tt{Yes}$，$\tt{yes}$ 和 $\tt{YES}$ 都会被视为 $\tt{Yes}$。
+
+## 样例
+
+### 样例输入 1
+```
+3
+2 3
+000
+010
+3 3
+010
+1?1
+010
+3 4
+00?1
+01?1
+1?01
+```
+
+### 样例输出 1
+```
+Yes
+000
+010
+No
+Yes
+0001
+0101
+1101
+```
+
+## 提示
+
+难度：普及+/提高
+
+## 参考代码
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int T;
+    cin >> T;
+
+    while (T--) {
+        int n, m;
+        cin >> n >> m;
+
+        vector<string> s(n);
+        for (int i = 0; i < n; i++) cin >> s[i];
+
+        vector<string> result = s;
+
+        for (int j = 0; j < m; j++) {
+            char prev = '0';
+            for (int i = 0; i < n; i++) {
+                if (s[i][j] == '?') {
+                    result[i][j] = prev;
+                } else {
+                    prev = s[i][j];
+                }
+            }
+        }
+
+        bool valid = true;
+        for (int i = 0; i < n - 1; i++) {
+            int diff = 0;
+            for (int j = 0; j < m; j++) {
+                if (result[i][j] != result[i + 1][j]) diff++;
+            }
+            if (diff > 1) {
+                valid = false;
+                break;
+            }
+        }
+
+        if (valid) {
+            cout << "Yes\n";
+            for (int i = 0; i < n; i++) cout << result[i] << "\n";
+        } else {
+            cout << "No\n";
+        }
+    }
+
+    return 0;
+}
+```

@@ -1,0 +1,82 @@
+# [USACO23JAN] Leaders B
+
+## 题目描述
+
+Farmer John has $N$ cows $(2 \le N \le 10^5)$. Each cow has a breed that is either Guernsey or Holstein. As is often the case, the cows are standing in a line, numbered $1 \cdots N$ in this order.
+
+Over the course of the day, each cow writes down a list of cows. Specifically, cow $i$
+'s list contains the range of cows starting with herself (cow $i$) up to and including cow $E_i(i \le E_i \le N)$.
+
+FJ has recently discovered that each breed of cow has exactly one distinct leader. FJ does not know who the leaders are, but he knows that each leader must have a list that includes all the cows of their breed, or the other breed's leader (or both).
+
+Help FJ count the number of pairs of cows that could be leaders. It is guaranteed that there is at least one possible pair.
+
+## 输入格式
+
+The first line contains $N$.
+
+The second line contains a string of length $N$
+, with the ith character denoting the breed of the $i$-th cow (G meaning Guernsey and H meaning Holstein). It is guaranteed that there is at least one Guernsey and one Holstein.
+
+The third line contains $E_1 \cdots E_N$.
+
+## 输出格式
+
+Output the number of possible pairs of leaders.
+
+## 样例
+
+### 样例输入1
+```4
+GHHG
+2 4 3 4
+```
+
+### 样例输出1
+```1
+```
+
+### 样例输入2
+```3
+GGH
+2 3 3
+```
+
+### 样例输出2
+```2
+```
+
+## 提示
+
+### Explanation for Sample 1
+
+The only valid leader pair is $(1,2)$. Cow $1$'s list contains the other breed's leader (cow $2$). Cow $2$'s list contains all cows of her breed (Holstein).
+
+No other pairs are valid. For example, $(2,4)$
+is invalid since cow $4$'s list does not contain the other breed's leader, and it also does not contain all cows of her breed.
+
+### Explanation for Sample 2
+
+There are two valid leader pairs, $(1,3)$ and $(2,3)$.
+
+### Scoring
+
+ - Inputs $3-5$: $N \le 100$  
+ - Inputs $6-10$: $N \le 3000$
+ - Inputs $11-17$: No additional constraints.
+
+## 解题思路
+
+### 问题分析
+N头牛各有品种和覆盖范围，求可能的领导者配对数。
+
+### 核心思路
+预计算每头牛是否能覆盖所有同品种牛。对每对(G,H)检查：G覆盖所有G或覆盖H的位置，H覆盖所有H或覆盖G的位置。
+
+### 算法流程
+1. 计算每头牛的覆盖范围
+2. 预计算是否覆盖所有同品种
+3. 暴力检查所有配对
+
+### 复杂度分析
+时间O(N^2)，空间O(N)。

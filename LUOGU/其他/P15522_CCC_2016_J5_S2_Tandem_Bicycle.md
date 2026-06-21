@@ -1,0 +1,115 @@
+# [CCC 2016 J5/S2] Tandem Bicycle
+
+## 题目描述
+
+Since time immemorial, the citizens of Dmojistan and Pegland have been at war. Now, they have finally signed a truce. They have decided to participate in a tandem bicycle ride to celebrate the truce. There are $N$ citizens from each country. They must be assigned to pairs so that each pair contains one person from Dmojistan and one person from Pegland.
+
+Each citizen has a cycling speed. In a pair, the fastest person will always operate the tandem bicycle while the slower person simply enjoys the ride. In other words, if the members of a pair have speeds $a$ and $b$, then the **bike speed** of the pair is $\max(a, b)$. The **total speed** is the sum of the $N$ individual **bike speeds**.
+
+For this problem, in each test case, you will be asked to answer one of two questions:
+
+- Question 1: what is the minimum total speed, out of all possible assignments into pairs?
+- Question 2: what is the maximum total speed, out of all possible assignments into pairs?
+
+## 输入格式
+
+The first line will contain the type of question you are to solve, which is either $1$ or $2$.
+
+The second line contains $N$ ($1 \leq N \leq 100$).
+
+The third line contains $N$ space-separated integers: the speeds of the citizens of Dmojistan.
+
+The fourth line contains $N$ space-separated integers: the speeds of the citizens of Pegland.
+
+Each person's speed will be an integer between $1$ and $1\ 000\ 000$.
+
+For $8$ of the $15$ available marks, questions of type $1$ will be asked. For $7$ of the $15$ available marks, questions of type $2$ will be asked.
+
+## 输出格式
+
+Output the maximum or minimum total speed that answers the question asked.
+
+## 样例
+
+### 样例输入1
+```1
+3
+5 1 4
+6 2 4
+```
+
+### 样例输出1
+```12
+```
+
+### 样例输入2
+```2
+3
+5 1 4
+6 2 4
+```
+
+### 样例输出2
+```15
+```
+
+### 样例输入3
+```2
+5
+202 177 189 589 102
+17 78 1 496 540
+```
+
+### 样例输出3
+```2016
+```
+
+## 提示
+
+**Explanation for Output for Sample Input 1**
+
+There is a unique optimal solution:
+
+- Pair the citizen from Dmojistan with speed $5$ and the citizen from Pegland with speed $6$.
+- Pair the citizen from Dmojistan with speed $1$ and the citizen from Pegland with speed $2$.
+- Pair the citizen from Dmojistan with speed $4$ and the citizen from Pegland with speed $4$.
+
+
+**Explanation for Output for Sample Input 2**
+
+There are multiple possible optimal solutions. Here is one optimal solution:
+
+- Pair the citizen from Dmojistan with speed $5$ and the citizen from Pegland with speed $2$.
+- Pair the citizen from Dmojistan with speed $1$ and the citizen from Pegland with speed $6$.
+- Pair the citizen from Dmojistan with speed $4$ and the citizen from Pegland with speed $4$.
+
+**Explanation for Output for Sample Input 3**
+
+There are multiple possible optimal solutions. Here is one optimal solution:
+
+- Pair the citizen from Dmojistan with speed $202$ and the citizen from Pegland with speed $1$.
+- Pair the citizen from Dmojistan with speed $177$ and the citizen from Pegland with speed $540$.
+- Pair the citizen from Dmojistan with speed $189$ and the citizen from Pegland with speed $17$.
+- Pair the citizen from Dmojistan with speed $589$ and the citizen from Pegland with speed $78$.
+- Pair the citizen from Dmojistan with speed $102$ and the citizen from Pegland with speed $496$.
+
+This sum yields $202 + 540 + 189 + 589 + 496 = 2016$.
+
+## 解题思路
+
+### 问题分析
+
+两组 n 个数配对，求配对后 max 之和的最小值。
+
+### 核心思路
+
+两组分别排序后对应配对，贪心地让大的配大的。
+
+### 算法流程
+
+1. 两组分别升序排序
+2. 对应位置取 max 并累加
+
+### 复杂度分析
+
+时间 O(n log n)，空间 O(n)

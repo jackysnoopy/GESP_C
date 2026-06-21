@@ -1,0 +1,40 @@
+# [USACO17DEC] Greedy Gift Takers P
+
+## 题目描述
+
+Farmer John's nemesis, Farmer Nhoj, has $N$ cows ($1 \leq N \leq 10^5$), conveniently numbered $1 \dots N$. They have unexpectedly turned up at Farmer John's farm, so the unfailingly polite Farmer John is attempting to give them gifts.
+
+To this end, Farmer John has brought out his infinite supply of gifts, and Nhoj's cows have queued up in front of him, with cow $1$ at the head of the queue and cow $N$ at the tail. Farmer John was expecting that at every timestep, the cow at the head of the queue would take a gift from Farmer John and go to the tail of the queue. However, he has just realized that Nhoj's cows are not that polite! After receiving her gift, each cow may not go to the tail of the queue, but rather may cut some number of cows at the tail, and insert herself in front of them. Specifically, cow $i$ will always cut exactly $c_i$ cows ($0 \leq c_i \leq N-1$).
+
+
+Farmer John knows that some cows might receive multiple gifts; as he has an infinite supply, this does not worry him. But he is worried that some cows might become unhappy if they do not get any gifts.
+
+
+Help Farmer John find the number of cows who never receive any gifts, no matter how many gifts are handed out.
+
+## 样例
+
+--- Sample 1 ---
+Input:
+3
+1 2 0
+Output:
+1
+
+## 解题思路
+
+### 问题分析
+
+待补充
+
+### 核心思路
+
+待补充
+
+### 算法流程
+
+待补充
+
+### 复杂度分析
+
+待补充

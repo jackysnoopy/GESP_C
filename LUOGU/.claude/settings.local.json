@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/jackychen/workspace/code/c++/**)",
+      "Read(//Users/jackychen/workspace/code/**)",
+      "Bash(g++ -o /tmp/test_p11964 -std=c++17 -x c++ -)",
+      "Bash(/tmp/test_p11964)",
+      "Bash(g++ -o /tmp/test_p11964 P11964.cpp -std=c++17)",
+      "Bash(g++ -o /tmp/test_p13018 P13018.cpp -std=c++17)",
+      "Bash(/tmp/test_p13018)",
+      "Bash(g++ -o /tmp/test_p14078 P14078.cpp -std=c++17)",
+      "Bash(/tmp/test_p14078)",
+      "Bash(g++ -std=c++20 P15803.cpp -o P15803)",
+      "Bash(./P15803)",
+      "Bash(gdb *)",
+      "Bash(ls[ 四级/*.cpp)",
+      "Bash(cat)",
+      "Bash(已有完整内容，重新创建）)"
+    ]
+  }
+}

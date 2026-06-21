@@ -1,0 +1,51 @@
+# [ICPC 2016 WF] Swap Space
+
+## 题目描述
+
+You administer a large cluster of computers with hard drives that use various file system types to store data. You recently decided to unify the file systems to the same type. That is quite a challenge since all the drives are currently in use, all of them are filled with important data to the limits of their capacities, and you cannot afford to lose any of the data. Moreover, reformatting a drive to use a new file system may significantly change the drive’s capacity. To make the reformat possible, you will have to buy an extra hard drive. Obviously, you want to save money by minimizing the size of such extra storage.
+
+You can reformat the drives in any order. Prior to reformatting a drive, you must move all data from that drive to one or more other drives, splitting the data if necessary. After a drive is reformatted, you can immediately start using it to store data from other drives. It is not necessary to put all the data on the same drives they originally started on – in fact, this might even be impossible if some of the drives have smaller capacity with the new file system. It is also allowed for some data to end up on the extra drive.
+
+As an example, suppose you have four drives $A$, $B$, $C$, and $D$ with drive capacities $6$, $1$, $3$, and $3$ GB. Under the new file system, the capacities become $6$, $7$, $5$, and $5$ GB, respectively. If you buy only $1$ GB of extra space, you can move the data from drive $B$ there and then reformat drive $B$. Now you have $7$ GB free on drive $B$, so you can move the $6$ GB from drive $A$ there and reformat drive $A$. Finally, you move the six total gigabytes from drives $C$ and $D$ to drive $A$, and reformat $C$ and $D$.
+
+## 样例
+
+--- Sample 1 ---
+Input:
+4
+6 6
+1 7
+3 5
+3 5
+
+Output:
+1
+
+--- Sample 2 ---
+Input:
+4
+2 2
+3 3
+5 1
+5 10
+
+Output:
+5
+
+## 解题思路
+
+### 问题分析
+
+待补充
+
+### 核心思路
+
+待补充
+
+### 算法流程
+
+待补充
+
+### 复杂度分析
+
+待补充
