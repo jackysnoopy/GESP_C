@@ -25,6 +25,11 @@
 ### 核心思路
 遍历一遍数组找最大最小值。
 
+### 算法流程
+1. 初始化最大值 maxVal 和最小值 minVal
+2. 遍历数组，更新 maxVal = max(maxVal, a[i])，minVal = min(minVal, a[i])
+3. 返回 maxVal - minVal
+
 ### 复杂度分析
 - 时间复杂度：O(n)
 - 空间复杂度：O(n)

@@ -80,6 +80,28 @@ In Sample Case #3, all seven opponents use the same program. Using the program P
 - $1 \leqslant \mathbf{A} \leqslant 255$.
 - $\mathbf{C}_{\mathbf{i}}$ is between 1 and 500 characters long, for all $\mathbf{i}$.
 
+## 解题思路
+
+### 问题分析
+在一个机器人编程锦标赛中，需要找到一个能击败所有对手的程序。每个程序由R（石头）、P（布）、S（剪刀）组成。比赛规则：第一个出现胜负的回合决定胜者，如果超过$10^{100}$个回合则抛硬币决定。
+
+### 核心思路
+采用贪心策略逐步构建程序。每次添加一个字符，检查当前候选程序是否能在有限回合内击败所有对手。由于程序长度限制为500，可以在O(500)长度内找到解或判定无解。
+
+### 算法流程
+1. 读入所有对手的程序
+2. 初始化result为空字符串，possible为true
+3. 从长度1到500遍历：
+   - 对于每个位置，尝试添加'R'、'P'、'S'三个字符
+   - 对于每个候选程序，检查是否能击败所有对手：
+     - 模拟每场比赛，检查在有限回合内是否出现胜负
+     - 如果能击败所有对手，则更新result，标记possible=false并跳出
+4. 如果result为空则输出"IMPOSSIBLE"，否则输出result
+
+### 复杂度分析
+- 时间复杂度：$O(500 \times 3 \times A \times 500) = O(750000A)$，最坏情况下需要尝试500个位置，每个位置3种选择，对A个对手各模拟500回合
+- 空间复杂度：$O(A \times L)$，存储所有对手程序，L为最大程序长度
+
 ## 参考代码
 
 ```cpp

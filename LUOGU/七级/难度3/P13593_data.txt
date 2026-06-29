@@ -1,0 +1,72 @@
+=== PID: P13593 ===
+=== Name: [NWRRC 2023] Missing Vowels ===
+=== Difficulty: 3 ===
+=== Background ===
+
+=== Description ===
+There are many ways to write a word on paper. For example, some writing systems, like Arabic and Hebrew, omit most vowels, although they write some of them.
+
+In this problem, we will only consider strings consisting of English letters and hyphens. Letters $\tt{a}$, $\tt{e}$, $\tt{i}$, $\tt{o}$, $\tt{u}$, and $\tt{y}$ are considered to be vowels, while hyphens and all other letters are considered to be consonants. All comparisons are case-insensitive: uppercase and lowercase versions of the same letter are considered equal.
+
+You are given two strings $s$ and $f$, called the $\textit{short}$ name and the $\textit{full}$ name, respectively. Your task is to check whether the short name $s$ can be obtained from the full name $f$ by omitting some vowels (possibly none).
+=== Input ===
+The first line contains a single string $s$, denoting the short name.
+
+The second line contains a single string $f$, denoting the full name.
+
+Each string is non-empty and consists of at most $1000$ English letters and hyphens.
+=== Output ===
+Print $\tt{Same}$ if the short name $s$ can be obtained from the long name $f$ by omitting some vowels, and $\tt{Different}$ otherwise.
+=== Hint ===
+
+=== Samples ===
+--- Sample 1 ---
+Input:
+Shrm-el-Shikh
+Sharm-el-Sheikh
+Output:
+Same
+--- Sample 2 ---
+Input:
+Eilot
+Eilat
+Output:
+Different
+--- Sample 3 ---
+Input:
+Saint-Petersburg
+Saint-Petersburg
+Output:
+Same
+--- Sample 4 ---
+Input:
+Bcdfghjklmnpqrstvwxz
+Abcdefghijklmnopqrstuvwxzyy
+Output:
+Same
+--- Sample 5 ---
+Input:
+Aa
+aaaA
+Output:
+Same
+--- Sample 6 ---
+Input:
+Etis-Atis-Amatis
+Etis-Atis-Animatis
+Output:
+Different
+--- Sample 7 ---
+Input:
+will-the-wisp
+will-o-the-wisp
+Output:
+Different
+--- Sample 8 ---
+Input:
+--a-very-short-name--
+long-name
+Output:
+Different
+=== Limits ===
+{"time": [2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000], "memory": [1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576]}

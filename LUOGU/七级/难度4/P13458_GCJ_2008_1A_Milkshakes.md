@@ -89,6 +89,30 @@ In the second case, there is only one flavor. One of your customers wants it mal
 
 The sum of all the $T$ values for the customers in a test case will not exceed $3000$.
 
+## 解题思路
+
+### 问题分析
+
+$N$ 种口味的奶昔，每种可选 malted 或 unmalted。$M$ 个顾客各喜欢若干种，至少满足一种。目标是最小化 malted 数量。
+
+### 核心思路
+
+贪心算法：初始所有口味设为 unmalted。对每个顾客，若其喜欢的口味中已有满足的则跳过；否则必须将该顾客喜欢的唯一 malted 口味设为 malted（若无 malted 选项则无解）。
+
+### 算法流程
+
+1. 初始化所有口味为 unmalted
+2. 对每个顾客：
+   - 检查其喜欢的口味中是否已有满足的
+   - 若无满足且有 malted 选项，将其设为 malted
+   - 若无满足且无 malted 选项，输出 IMPOSSIBLE
+3. 输出最终方案
+
+### 复杂度分析
+
+- 时间复杂度：$O(M \times T)$，$T$ 为每顾客喜欢的口味数
+- 空间复杂度：$O(N + M)$
+
 ## 参考代码
 
 ```cpp

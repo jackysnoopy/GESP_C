@@ -1,0 +1,143 @@
+# [GCJ 2021 #1A] Append Sort
+
+## 题目描述
+
+We have a list of integers $X_1, X_2, \ldots, X_N$. We would like them to be in strictly increasing order, but unfortunately, we cannot reorder them. This means that usual sorting algorithms will not work.
+
+Our only option is to change them by appending digits $0$ through $9$ to their right (in base $10$). For example, if one of the integers is $10$, you can turn it into $100$ or $109$ with a single append operation, or into $1034$ with two operations (as seen in the image below).
+
+Given the current list, what is the minimum number of single digit append operations that are necessary for the list to be in strictly increasing order?
+
+For example, if the list is $100, 7, 10$, we can use $4$ total operations to make it into a sorted list, as the following image shows.
+
+![](https://cdn.luogu.com.cn/upload/image_hosting/x5uxrlzd.png)
+
+## 输入格式
+
+The first line of the input gives the number of test cases, $\mathbf{T}$. $\mathbf{T}$ test cases follow. Each test case is described in two lines. The first line of a test case contains a single integer $\mathbf{N}$, the number of integers in the list. The second line contains $\mathbf{N}$ integers $\mathbf{X}_1, \mathbf{X}_2, \ldots, \mathbf{X}_\mathbf{N}$, the members of the list.
+
+## 输出格式
+
+For each test case, output one line containing `Case #x: y`, where $x$ is the test case number (starting from 1) and $y$ is the minimum number of single digit append operations needed for the list to be in strictly increasing order.
+
+## 样例
+
+### 样例输入 1
+```
+4
+3
+100 7 10
+2
+10 10
+3
+4 19 1
+3
+1 2 3
+```
+
+### 样例输出 1
+```
+Case #1: 4
+Case #2: 1
+Case #3: 2
+Case #4: 0
+```
+
+## 提示
+
+**Sample Explanation**
+
+In Sample Case #1, the input is the same as in the example given in the problem statement. As the image shows, the list can be turned into a sorted list with 4 operations. Notice that the last two integers need to end up with at least 3 digits (requiring at least 3 append operations in total). If all of the final numbers had exactly three digits, the second would be larger than the third because it starts with a 7 instead of a 1. This means we cannot do it with fewer than 4 operations.
+
+In Sample Case #2, notice that the list needs to be in strictly increasing order, so we have to do at least one operation. In this case, any valid append operation to the second integer works.
+
+In Sample Case #3, we can use two append operations to get the list to 4, 19, 193.
+
+In Sample Case #4, the given list is already in strictly increasing order, so no operations are necessary.
+
+**Limits**
+
+- $1 \leq \mathbf{T} \leq 100$.
+
+**Test Set 1 (12 Pts, Visible Verdict)**
+
+- $2 \leq \mathbf{N} \leq 3$.
+- $1 \leq \mathbf{X}_i \leq 100$, for all $i$.
+
+**Test Set 2 (14 Pts, Visible Verdict)**
+
+- $2 \leq \mathbf{N} \leq 100$.
+- $1 \leq \mathbf{X}_i \leq 10^9$, for all $i$.
+
+## 解题思路
+
+### 问题分析
+待补充
+
+### 核心思路
+待补充
+
+### 算法流程
+待补充
+
+### 复杂度分析
+待补充
+
+## 参考代码
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+bool bigger(const string& a, const string& b) {
+    if (a.size() != b.size()) return a.size() > b.size();
+    return a > b;
+}
+int main() {
+    int T;
+    cin >> T;
+    for (int tc = 1; tc <= T; tc++) {
+        int n;
+        cin >> n;
+        vector<string> a(n);
+        for (int i = 0; i < n; i++) cin >> a[i];
+        long long ans = 0;
+        for (int i = 1; i < n; i++) {
+            if (bigger(a[i], a[i-1])) continue;
+            int la = a[i].size(), lb = a[i-1].size();
+            if (la == lb) {
+                a[i] += '0'; ans++;
+            } else {
+                int diff = lb - la;
+                string prefix = a[i-1].substr(0, la);
+                if (a[i] == prefix) {
+                    string rest = a[i-1].substr(la);
+                    bool all9 = true;
+                    for (char c : rest) if (c != '9') { all9 = false; break; }
+                    if (all9) {
+                        a[i] += string(diff + 1, '0');
+                        ans += diff + 1;
+                    } else {
+                        string nr = rest;
+                        for (int k = nr.size() - 1; k >= 0; k--) {
+                            if (nr[k] < '9') { nr[k]++; break; }
+                            nr[k] = '0';
+                        }
+                        a[i] += nr;
+                        ans += diff;
+                    }
+                } else if (a[i] > prefix) {
+                    a[i] += string(diff, '0');
+                    ans += diff;
+                } else {
+                    a[i] += string(diff + 1, '0');
+                    ans += diff + 1;
+                }
+            }
+        }
+        cout << "Case #" << tc << ": " << ans << "\n";
+    }
+    return 0;
+}
+```

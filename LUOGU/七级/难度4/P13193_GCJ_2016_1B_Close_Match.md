@@ -46,14 +46,6 @@ In sample case #4, note that the answer cannot be 15 10; that minimizes the abso
 - $1 \leqslant \mathbf{T} \leqslant 200$.
 - $\mathbf{C}$ and $\mathbf{J}$ have the same length.
 
-**Small dataset (Test Set 1 - Visible)**
-
-- $1 \leqslant \text{the length of } \mathbf{C} \text{ and } \mathbf{J} \leqslant 3$.
-
-**Large dataset (Test Set 2 - Hidden)**
-
-- $1 \leqslant \text{the length of } \mathbf{C} \text{ and } \mathbf{J} \leqslant 18$.
-
 ## 参考代码
 
 ```cpp
@@ -129,3 +121,23 @@ int main() {
     return 0;
 }
 ```
+
+## 解题思路
+
+### 问题分析
+题目要求用数字替换两个字符串中的 '?'，使得两个数字的绝对差最小。若有多个解，优先选择较小的 Coders 分数；若仍有多个解，选择较小的 Jammers 分数。
+
+### 核心思路
+采用暴力枚举法，遍历所有可能的 Coders 分数和 Jammers 分数组合，验证是否符合原始字符串的约束，记录最优解。
+
+### 算法流程
+1. 枚举 Coders 分数 c_val 从 0 到 10^n - 1
+2. 将 c_val 转换为 n 位字符串，验证是否与原字符串 C 兼容（'?'可匹配任意数字）
+3. 若兼容，枚举 Jammers 分数 j_val 从 0 到 10^n - 1
+4. 同样验证 j_str 与原字符串 J 的兼容性
+5. 计算差值，按照优先级（差值最小 → c 最小 → j 最小）更新最优解
+6. 输出最终的 c 和 j
+
+### 复杂度分析
+- 时间复杂度：O(10^(2n) × n)，其中 n 为字符串长度（≤18）
+- 空间复杂度：O(n)，用于存储字符串

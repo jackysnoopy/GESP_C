@@ -77,13 +77,32 @@ In Sample Case #3, both can claim any stack in their first turn. Since stack 1 i
 - $1 \leq \mathbf{L}_{\mathrm{b}} \leq \mathbf{R}_{\mathrm{b}} \leq \mathbf{N}$
 - It is not the case that $\mathbf{L}_{\mathrm{a}} \leq \mathbf{L}_{\mathrm{b}}=\mathbf{R}_{\mathrm{b}} \leq \mathbf{R}_{\mathrm{a}}$. (Bob is guaranteed to be able to pick a stack for his first turn regardless of Alice's choice.)
 
-**Test Set 1 (4 Pts, Visible Verdict)**
+## 解题思路
 
-- $2 \leq \mathbf{N} \leq 100$.
+### 问题分析
 
-**Test Set 2 (10 Pts, Visible Verdict)**
+Alice 和 Bob 轮流拿煎饼堆。Alice 首先从 $[L_a, R_a]$ 选一个，Bob 从 $[L_b, R_b]$ 选一个。之后每人只能拿与自己之前拿过的相邻的堆。目标是 Alice 最大化自己拿到的总煎饼数。
 
-- $2 \leq \mathbf{N} \leq 10^{5}$.
+### 核心思路
+
+关键观察：首次选取后，双方各自向左右扩展，形成一个"领地"。Alice 和 Bob 的领地在中间某处分界。
+
+- 若 Alice 选位置 $a$，Bob 选位置 $b$（$b > a$），则 Alice 能拿到 $[1, \text{split}]$ 的前缀和，Bob 拿剩余部分
+- 分界点取决于中间间隔的奇偶性：间隔 $g$ 个空位，Alice 能拿到 $a + \lfloor g/2 \rfloor$ 个位置
+
+**最优策略**：Alice 遍历所有可能的首选位置，Bob 选最优响应（最小化 Alice 的收益），Alice 选使自己最小收益最大的位置。
+
+### 算法流程
+
+1. 预处理前缀和 `pref` 和后缀和 `suff`
+2. 枚举 Alice 的首选位置 $a \in [L_a, R_a]$
+3. 对于每个 $a$，考虑 Bob 在 $a$ 右侧和左侧的两种情况，计算 Alice 的最小收益
+4. 取所有情况的最大值
+
+### 复杂度分析
+
+- **时间复杂度**：$O(N \times (R_a - L_a))$，最坏 $O(N^2)$
+- **空间复杂度**：$O(N)$
 
 ## 参考代码
 

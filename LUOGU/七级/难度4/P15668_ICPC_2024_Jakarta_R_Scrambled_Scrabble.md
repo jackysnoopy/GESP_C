@@ -91,6 +91,29 @@ Explanation for the sample input/output #4
 
 The whole string $ S $ is a word consisting of two syllables: DAN and GAN.
 
+## 解题思路
+
+### 问题分析
+给定字符串 S，可以删除和重排字母来构造"单词"。单词由音节组成，音节 = 辅音+元音+辅音。Y 可作元音或辅音，NG 连在一起算一个辅音。求最长单词长度。
+
+### 核心思路
+统计元音数（A/E/I/O/U + Y）和辅音数（其他 + NG 对）。每个音节需要 2 个辅音和 1 个元音，最多能构成 min(辅音/2, 元音) 个音节，单词长度 = 音节数 × 3。
+
+### 算法流程
+1. 遍历字符串，统计：
+   - vowels：A/E/I/O/U 的数量
+   - y_count：Y 的数量
+   - ng_count：NG 对的数量
+   - consonants：其他辅音数量
+2. total_consonants = consonants + ng_count
+3. total_vowels = vowels + y_count
+4. syllables = min(total_consonants / 2, total_vowels)
+5. 输出 syllables × 3（若 syllables > 0），否则输出 0
+
+### 复杂度分析
+- 时间复杂度：O(|S|)，遍历一次字符串
+- 空间复杂度：O(1)
+
 ## 参考代码
 
 ```cpp
@@ -135,3 +158,21 @@ int main() {
     return 0;
 }
 ```
+
+## 解题思路
+
+### 问题分析
+给定字符串S，可以删除和重排字符形成"单词"。单词由音节组成，音节=辅音+元音+辅音。Y可作元音或辅音，NG可作为单个辅音。
+
+### 核心思路
+统计元音和辅音数量。Y可以补充到任意一边，NG算作一个辅音。每个音节需要2个辅音和1个元音，所以音节数=min(辅音数/2, 元音数)，答案=音节数×3。
+
+### 算法流程
+1. 统计元音(A,E,I,O,U)、Y、NG、其他辅音的数量
+2. 总辅音=辅音数+NG数，总元音=元音数+Y数
+3. 音节数=min(总辅音/2, 总元音)
+4. 输出音节数×3
+
+### 复杂度分析
+- 时间复杂度：O(|S|)
+- 空间复杂度：O(1)

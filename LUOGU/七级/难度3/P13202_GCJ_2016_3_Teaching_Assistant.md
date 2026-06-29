@@ -76,14 +76,39 @@ In sample case #5, you can alternate between requesting a "Coding" problem set o
 - $1 \leqslant \mathbf{T} \leqslant 100$.
 - The length of $\mathbf{S}$ is even.
 
-**Small dataset (5 Pts, Test Set 1 - Visible)**
+## 解题思路
 
-- $2 \leqslant$ the length of $\mathbf{S} \leqslant 50$.
+### 问题分析
 
-**Large dataset (10 Pts, Test Set 2 - Hidden)**
+给定助教每天的心情序列（C 或 J），学生每天可以请求一套题目或提交一套题目。请求时：
+- 心情匹配得 10 分，不匹配得 5 分
+提交时：
+- 心情匹配得满分（10 或 5），不匹配扣 5 分
 
-- $2 \leqslant$ the length of $\mathbf{S} \leqslant 20000$.
-- The sum of lengths of all $\mathbf{S}$ in the dataset is at most 150000.
+由于提交时心情匹配与否的规则对称，可以证明：每对（请求，提交）的最优得分只取决于两天的心情是否相同——相同得 10 分，不同得 5 分。
+
+### 核心思路
+
+总天数 $n$，共 $L = n/2$ 对。每对基础得分为 5 分，若心情相同额外得 5 分。因此：
+
+$$\text{总分} = 5L + 5 \times (\text{相同心情的配对数})$$
+
+问题转化为：在不交叉配对的约束下，最大化相邻相同心情的配对数。
+
+### 算法流程
+
+这等价于**自由群归约**问题——栈模拟：
+
+1. 初始化空栈
+2. 遍历字符串每个字符：
+   - 若栈非空且栈顶与当前字符相同，则弹出栈顶，配对数 +1
+   - 否则将当前字符压入栈
+3. 最终答案为 $5L + 5 \times \text{配对数}$
+
+### 复杂度分析
+
+- **时间复杂度**：$O(n)$，单次遍历
+- **空间复杂度**：$O(n)$，栈空间
 
 ## 参考代码
 

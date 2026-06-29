@@ -86,13 +86,32 @@ Sample Case #3 is the one described at the end of the problem statement. Note th
 - $0 \leq B_i \leq C$, for all $i$.
 - The sum (over all $i$ from 1 to $C$, inclusive) of all $B_i$ values = $C$.
 
-**Test set 1 (5 Pts, Visible)**
+## 解题思路
 
-- $2 \leq C \leq 5$.
+### 问题分析
 
-**Test set 2 (12 Pts, Hidden)**
+给定 $C$ 列的弹球装置，每个格子可以是 `\`（向右下）、`/`（向左下）或空。从每列顶部放入一个球，求使球到达指定底部位置的最少行数，或判断不可能。
 
-- $2 \leq C \leq 100$.
+### 核心思路
+
+**关键观察**：球在每一行最多水平移动 1 格。若第 $i$ 个球需要从列 $i$ 移动到列 $target[i]$，则至少需要 $|target[i] - i|$ 行。因此最少行数为 $\max_i |target[i] - i| + 1$（加 1 是因为最后一行必须为空）。
+
+**可行性判断**：若 $B[1] = 0$ 或 $B[C] = 0$，则不可能——最左/最右列的球无法被引导到其他列（边界列无法放斜坡）。
+
+**构造方案**：贪心逐行放置斜坡，使球逐步向目标列移动。
+
+### 算法流程
+
+1. 检查 $B[1]$ 和 $B[C]$ 是否为 0，若是则输出 IMPOSSIBLE
+2. 将 $B$ 数组展开为每个球的目标列 $target[i]$
+3. 计算最大移动距离 $maxDist = \max |target[i] - i|$
+4. 逐行构造网格：每行确定每个位置需要的斜坡方向
+5. 输出行数和网格
+
+### 复杂度分析
+
+- **时间复杂度**：$O(C \times maxDist)$，最坏 $O(C^2)$
+- **空间复杂度**：$O(C \times maxDist)$
 
 ## 参考代码
 

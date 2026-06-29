@@ -76,6 +76,29 @@ To beat the monster in 4 turns, Bob can play as follows:
 3. Bob plays the $!$ card, so the monster's health becomes $10$. Since now Bob has no cards in his hands, all three cards go back to him.
 4. Bob plays the $!$ card, so the monster's health becomes $0$, and the monster is beaten.
 
+## 解题思路
+
+### 问题分析
+Bob 有一副卡牌，包含乘法、加法和攻击三种类型。每次出牌后弃掉，手牌用完后从弃牌堆回收。每回合出一张牌，求最少回合数使怪物血量降至 ≤0。
+
+### 核心思路
+贪心模拟：按固定顺序出牌，每次遍历手牌，遇到乘法/加法就使用提升攻击力，遇到攻击就攻击怪物。手牌用完后自动回收，重复执行直到击败怪物或确认无法击败。
+
+### 算法流程
+1. 统计攻击牌数量，若为 0 则输出 "*"
+2. 初始化 power = P，health = H，turns = 0
+3. 循环直到 health ≤ 0：
+   - 遍历所有手牌：
+     - 乘法牌：power *= X
+     - 加法牌：power += Y
+     - 攻击牌：health -= power，turns++
+     - 若 health ≤ 0，输出 turns 并结束
+4. 若循环结束仍未击败，输出 "*"
+
+### 复杂度分析
+- 时间复杂度：O(N × rounds)，其中 rounds 为所需回合数
+- 空间复杂度：O(N)
+
 ## 参考代码
 
 ```cpp
@@ -136,3 +159,21 @@ int main() {
     return 0;
 }
 ```
+
+## 解题思路
+
+### 问题分析
+Bob有N张卡牌，包括乘法卡、加法卡和攻击卡。每回合必须打出一张卡，当手牌用完后所有卡牌回到手牌。目标是击败怪物（生命值归0），求最少回合数。
+
+### 核心思路
+按固定顺序依次使用所有卡牌。先使用所有增益卡（乘法和加法），最后使用攻击卡。每次打完一轮后卡牌回到手牌，重复此过程直到击败怪物。
+
+### 算法流程
+1. 检查是否有攻击卡，若无则输出"*"
+2. 按顺序遍历卡牌：遇到乘法/加法就使用，遇到攻击就扣减怪物生命值
+3. 每次攻击后检查怪物是否被击败
+4. 若一轮结束仍未击败，继续下一轮
+
+### 复杂度分析
+- 时间复杂度：O(N × 回合数)
+- 空间复杂度：O(N)

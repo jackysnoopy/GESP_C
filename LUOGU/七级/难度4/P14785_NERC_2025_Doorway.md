@@ -58,6 +58,27 @@ This illustration shows a solution for the first example. Walls are filled with 
 ![](https://cdn.luogu.com.cn/upload/image_hosting/a6lelhuy.png)
 :::
 
+## 解题思路
+
+### 问题分析
+
+多层滑动门，每层有固定长度的门和墙壁。每层的门可以独立左右移动。求所有层同时打开的最大开口长度。
+
+### 核心思路
+
+每层的最大开口 = 总宽度 - 所有门的总长度。所有层的最大开口取最大值即为答案。
+
+### 算法流程
+
+1. 读入每层的墙壁范围 $[x_1, x_2]$ 和门的长度
+2. 对每层计算：$max\_opening = (x_2 - x_1) - \sum l_{i,j}$
+3. 取所有层的最大值作为答案
+
+### 复杂度分析
+
+- 时间复杂度：$O(\sum k_i)$
+- 空间复杂度：$O(\sum k_i)$
+
 ## 参考代码
 
 ```cpp

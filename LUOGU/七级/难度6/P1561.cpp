@@ -1,34 +1,32 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 int main() {
     ios::sync_with_stdio(false);
-    cin.tie(0);
-    int n; cin >> n;
-    vector<pair<int,int>> a(n);
-    for (int i = 0; i < n; ++i) cin >> a[i].first >> a[i].second;
-    // Johnson's rule
-    vector<pair<int,int>> A, B;
-    for (auto& p : a) {
-        if (p.first <= p.second) A.push_back(p);
-        else B.push_back(p);
+    cin.tie(nullptr);
+    
+    int n;
+    cin >> n;
+    
+    vector<pair<int, int>> cows(n);
+    for (int i = 0; i < n; i++) {
+        cin >> cows[i].first >> cows[i].second;
     }
-    sort(A.begin(), A.end(), [](const pair<int,int>& x, const pair<int,int>& y){
-        return x.first < y.first;
+    
+    sort(cows.begin(), cows.end(), [](const pair<int, int>& a, const pair<int, int>& b) {
+        return a.second > b.second;
     });
-    sort(B.begin(), B.end(), [](const pair<int,int>& x, const pair<int,int>& y){
-        return x.second > y.second;
-    });
-    vector<pair<int,int>> ord;
-    for (auto& p : A) ord.push_back(p);
-    for (auto& p : B) ord.push_back(p);
-    long long t1 = 0, t2 = 0;
-    for (auto& p : ord) {
-        t1 += p.first;
-        t2 = max(t2, t1) + p.second;
+    
+    long long up_time = 0;
+    long long down_time = 0;
+    
+    for (int i = 0; i < n; i++) {
+        up_time += cows[i].first;
+        down_time = max(down_time, up_time) + cows[i].second;
     }
-    cout << t2 << "\n";
+    
+    cout << down_time << "\n";
     return 0;
 }

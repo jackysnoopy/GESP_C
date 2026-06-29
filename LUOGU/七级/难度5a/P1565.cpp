@@ -1,54 +1,88 @@
 #include <iostream>
-#include <stack>
+#include <vector>
+#include <algorithm>
+#include <climits>
 using namespace std;
-
-const int N = 205;
-long long a[N][N];
-long long col[N][N]; // 列前缀
-int n, m;
 
 int main() {
     ios::sync_with_stdio(false);
-    cin.tie(0);
+    cin.tie(nullptr);
+    
+    int n, m;
     cin >> n >> m;
-    for (int i = 1; i <= n; ++i)
-        for (int j = 1; j <= m; ++j) cin >> a[i][j];
-    // 列前缀和
-    for (int j = 1; j <= m; ++j)
-        for (int i = 1; i <= n; ++i)
-            col[i][j] = col[i-1][j] + a[i][j];
-    int ans = 0;
-    // 枚举上下行
-    for (int u = 1; u <= n; ++u) {
-        for (int d = u; d <= n; ++d) {
-            int height = d - u + 1;
-            // 一维问题：最大子段和 >= 0 的最长子段
-            // s[j] = col[d][j] - col[u-1][j] (该列在 [u,d] 行内的和)
-            // 求最长 j1..j2 使得 sum(s[j1..j2]) >= 0 → 最长子区间使前缀和 P[j2] >= P[j1-1]
-            // 经典 O(M) 单调栈：
-            static long long P[N];
-            P[0] = 0;
-            for (int j = 1; j <= m; ++j) P[j] = P[j-1] + (col[d][j] - col[u-1][j]);
-            // 最长 (l,r) with P[r] >= P[l], 答案 r - l 列宽
-            // 单调栈：存递减 P 的下标
-            static int stk[N];
-            int top = 0;
-            stk[top] = 0;
-            for (int j = 1; j <= m; ++j) {
-                if (P[j] < P[stk[top]]) stk[++top] = j;
+    
+    vector<vector<long long>> a(n, vector<long long>(m));
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            cin >> a[i][j];
+        }
+    }
+    
+    // Prefix sum for columns
+    vector<vector<long long>> ps(n + 1, vector<long long>(m, 0));
+    for (int j = 0; j < m; j++) {
+        for (int i = 0; i < n; i++) {
+            ps[i + 1][j] = ps[i][j] + a[i][j];
+        }
+    }
+    
+    long long ans = 0;
+    
+    // Try all pairs of rows
+    for (int top = 0; top < n; top++) {
+        for (int bottom = top; bottom < n; bottom++) {
+            int height = bottom - top + 1;
+            
+            // For each column, compute sum of elements between top and bottom
+            vector<long long> col_sum(m);
+            for (int j = 0; j < m; j++) {
+                col_sum[j] = ps[bottom + 1][j] - ps[top][j];
             }
-            // 从右往左扫
-            for (int j = m; j >= 1; --j) {
-                while (top >= 0 && P[j] >= P[stk[top]]) {
-                    int width = j - stk[top];
-                    long long area = (long long)width * height;
-                    if (area > ans) ans = (int)area;
-                    --top;
+            
+            // Find longest subarray with average > 0, i.e., sum > 0
+            // This is equivalent to finding max area rectangle with sum > 0
+            // Use prefix sum and binary search
+            vector<long long> prefix(m + 1, 0);
+            for (int j = 0; j < m; j++) {
+                prefix[j + 1] = prefix[j] + col_sum[j];
+            }
+            
+            // For each right endpoint, find leftmost prefix that makes sum > 0
+            vector<pair<long long, int>> sorted_prefix;
+            for (int j = 0; j <= m; j++) {
+                sorted_prefix.push_back({prefix[j], j});
+            }
+            sort(sorted_prefix.begin(), sorted_prefix.end());
+            
+            for (int j = 0; j <= m; j++) {
+                // Find smallest prefix[j] - prefix[i] > 0
+                // i.e., prefix[i] < prefix[j]
+                // Binary search for first element < prefix[j]
+                long long target = prefix[j];
+                int lo = 0, hi = m + 1;
+                while (lo < hi) {
+                    int mid = (lo + hi) / 2;
+                    if (sorted_prefix[mid].first < target) {
+                        lo = mid + 1;
+                    } else {
+                        hi = mid;
+                    }
                 }
-                if (top < 0) break;
+                
+                if (lo > 0) {
+                    int left_idx = sorted_prefix[lo - 1].second;
+                    if (left_idx < j) {
+                        int width = j - left_idx;
+                        int area = width * height;
+                        if (area > ans) {
+                            ans = area;
+                        }
+                    }
+                }
             }
         }
     }
+    
     cout << ans << "\n";
     return 0;
 }

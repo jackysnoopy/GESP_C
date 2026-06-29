@@ -1,93 +1,121 @@
 #include <iostream>
 #include <vector>
+#include <queue>
 #include <algorithm>
-#include <climits>
+#include <cstring>
 using namespace std;
 
-// 引水入城：DFS + 区间覆盖
-// 1. 对第一行每个城市 DFS，记录其能覆盖的最后一行的左右端点 [L,R]
-// 2. 检查最后一行是否每个城市都能被覆盖：若有未覆盖城市，输出 0 + 数量
-// 3. 否则用区间覆盖贪心选最少蓄水厂
+const int MAXN = 510;
 
-int N, M;
-vector<vector<int>> h;
-vector<vector<int>> L, R; // 每个格子能覆盖最后一行的范围
-vector<vector<bool>> visited;
+int n, m;
+int h[MAXN][MAXN];
+bool vis[MAXN][MAXN];
+int cover[MAXN][MAXN];
+int maxr[MAXN];
 
-void dfs(int x, int y) {
-    if (visited[x][y]) return;
-    visited[x][y] = true;
-    if (x == N - 1) {
-        L[x][y] = R[x][y] = y;
-    } else {
-        L[x][y] = INT_MAX;
-        R[x][y] = INT_MIN;
-    }
-    int dx[] = {-1, 1, 0, 0};
-    int dy[] = {0, 0, -1, 1};
-    for (int d = 0; d < 4; d++) {
-        int nx = x + dx[d], ny = y + dy[d];
-        if (nx < 0 || nx >= N || ny < 0 || ny >= M) continue;
-        if (h[nx][ny] >= h[x][y]) continue; // 只能往低处
-        dfs(nx, ny);
-        L[x][y] = min(L[x][y], L[nx][ny]);
-        R[x][y] = max(R[x][y], R[nx][ny]);
+int dx[] = {0, 0, 1, -1};
+int dy[] = {1, -1, 0, 0};
+
+void bfs(int sx, int sy, int id) {
+    queue<pair<int, int>> q;
+    q.push({sx, sy});
+    vis[sx][sy] = true;
+    cover[sx][sy] = id;
+    maxr[id] = max(maxr[id], sx);
+    
+    while (!q.empty()) {
+        int x = q.front().first;
+        int y = q.front().second;
+        q.pop();
+        
+        for (int d = 0; d < 4; d++) {
+            int nx = x + dx[d];
+            int ny = y + dy[d];
+            if (nx < 1 || nx > n || ny < 1 || ny > m) continue;
+            if (vis[nx][ny]) continue;
+            if (h[nx][ny] >= h[x][y]) continue;
+            
+            vis[nx][ny] = true;
+            cover[nx][ny] = id;
+            maxr[id] = max(maxr[id], nx);
+            q.push({nx, ny});
+        }
     }
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    cin >> N >> M;
-    h.assign(N, vector<int>(M));
-    L.assign(N, vector<int>(M, 0));
-    R.assign(N, vector<int>(M, 0));
-    visited.assign(N, vector<bool>(M, false));
-    for (int i = 0; i < N; i++)
-        for (int j = 0; j < M; j++)
+    
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
             cin >> h[i][j];
-    
-    // 从第一行的每个点 DFS
-    for (int j = 0; j < M; j++) dfs(0, j);
-    
-    // 检查最后一行是否能全部覆盖
-    vector<bool> covered(M, false);
-    for (int j = 0; j < M; j++) {
-        // 若 (N-1,j) 被任何第一行点覆盖
-        // 等价于：(N-1,j) 自身可达（即 visited[N-1][j]）
-        if (visited[N-1][j]) covered[j] = true;
-    }
-    int uncov = 0;
-    for (int j = 0; j < M; j++) if (!covered[j]) uncov++;
-    if (uncov > 0) {
-        cout << 0 << "\n" << uncov << "\n";
-        return 0;
-    }
-    
-    // 区间覆盖：从第一行各点收集 [L, R]
-    vector<pair<int,int>> intervals;
-    for (int j = 0; j < M; j++) {
-        if (L[0][j] != INT_MAX)
-            intervals.push_back({L[0][j], R[0][j]});
-    }
-    // 按左端点排序
-    sort(intervals.begin(), intervals.end());
-    int cur = 0, ans = 0;
-    int idx = 0;
-    while (cur < M) {
-        int best = -1;
-        while (idx < (int)intervals.size() && intervals[idx].first <= cur) {
-            best = max(best, intervals[idx].second);
-            idx++;
         }
-        if (best < cur) {
-            // 不可能发生，因为前面已经检查过覆盖
-            ans = -1;
+    }
+    
+    memset(vis, false, sizeof(vis));
+    memset(cover, 0, sizeof(cover));
+    memset(maxr, 0, sizeof(maxr));
+    
+    int id = 0;
+    for (int j = 1; j <= m; j++) {
+        if (!vis[1][j]) {
+            id++;
+            bfs(1, j, id);
+        }
+    }
+    
+    bool ok = true;
+    for (int j = 1; j <= m; j++) {
+        if (cover[n][j] == 0) {
+            ok = false;
             break;
         }
-        cur = best + 1;
-        ans++;
     }
-    cout << 1 << "\n" << ans << "\n";
+    
+    if (!ok) {
+        int cnt = 0;
+        for (int j = 1; j <= m; j++) {
+            if (cover[n][j] == 0) cnt++;
+        }
+        cout << "0\n" << cnt << "\n";
+    } else {
+        vector<pair<int, int>> intervals;
+        for (int i = 1; i <= id; i++) {
+            if (maxr[i] == n) {
+                int l = m + 1, r = 0;
+                for (int j = 1; j <= m; j++) {
+                    if (cover[n][j] == i) {
+                        l = min(l, j);
+                        r = max(r, j);
+                    }
+                }
+                intervals.push_back({l, r});
+            }
+        }
+        
+        sort(intervals.begin(), intervals.end());
+        
+        int ans = 0;
+        int cur = 0;
+        int idx = 0;
+        while (cur < m) {
+            int nxt = cur;
+            while (idx < (int)intervals.size() && intervals[idx].first <= cur + 1) {
+                nxt = max(nxt, intervals[idx].second);
+                idx++;
+            }
+            if (nxt == cur) {
+                cout << "0\n" << m - cur << "\n";
+                return 0;
+            }
+            cur = nxt;
+            ans++;
+        }
+        
+        cout << "1\n" << ans << "\n";
+    }
+    
     return 0;
 }

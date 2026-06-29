@@ -148,3 +148,27 @@ int main() {
     return 0;
 }
 ```
+
+## 解题思路
+
+### 问题分析
+
+Naomi 和 Ken 各有 N 个木块。在 War 模式下，Naomi 公布自己木块的真实质量，Ken 选择最优策略应对。在 Deceitful War 模式下，Naomi 可以谎报质量（但必须保证天平结果与谎报一致），Ken 仍按 War 的最优策略应对。需要分别求出两种模式下 Naomi 的最高得分。
+
+### 核心思路
+
+**Deceitful War**：Naomi 知道 Ken 的所有木块质量，可以用最小的木块"骗"Ken 出最大的木块。贪心策略是：将双方木块排序后，用双指针从最小开始匹配，若 Naomi 当前最小木块能赢 Ken 当前最小木块，则得分并消耗 Ken 的该木块；否则丢弃 Naomi 的最小木块（用于"骗"Ken 的大木块）。
+
+**War**：Ken 知道 Naomi 的策略后会用最优应对。贪心策略是：Ken 用自己最小的能赢 Naomi 当前木块的木块去应对。统计 Ken 能赢的回合数 war，则 Naomi 得分为 N - war。
+
+### 算法流程
+
+1. 读入并排序 Naomi 和 Ken 的木块质量数组。
+2. **Deceitful War 计算**：双指针 i=0, j=0 从最小开始。若 naomi[i] > ken[j]，则 deceit++ 且 j++；始终 i++。最终 deceit 即为 Deceitful War 得分。
+3. **War 计算**：双指针 i=0, j=0 从最小开始。若 ken[j] > naomi[i]，则 war++ 且 i++；始终 j++。War 得分为 N - war。
+4. 输出两个得分。
+
+### 复杂度分析
+
+- 时间复杂度：O(T × N log N)，排序为主，双指针遍历为 O(N)。
+- 空间复杂度：O(N)，用于存储两个数组。
