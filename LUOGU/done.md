@@ -704,10 +704,20 @@
 | P11671 | [USACO25JAN] Farmer John's Favorite Operation S | `USACO/` | - | - |
 | P2920 | [USACO08NOV] Time Management S | `USACO/` | - | - |
 
-## 其他比赛（28 题，已完成 28 题）
+## 其他比赛（38 题，已完成 38 题）
 
 | 题号 | 题名 | 目录 | 核心算法 | GESP 知识点 |
 | :--- | :--- | :--- | :--- | :--- |
+| UVA200 | Hardwood Species 硬木种类 | `其他比赛/` | map统计 | - |
+| UVA201 | Squares 正方形 | `其他比赛/` | 暴力枚举 | - |
+| UVA202 | Repeating Decimals 循环小数 | `其他比赛/` | 模拟长除法 | - |
+| UVA213 | Message Decoding 消息解码 | `其他比赛/` | 位运算解码 | - |
+| UVA216 | Getting in Line 接入线路 | `其他比赛/` | 全排列暴力 | - |
+| UVA218 | Mouse Holes 老鼠洞 | `其他比赛/` | 状压DP(TSP) | - |
+| UVA220 | Circle Battle 圆形战斗 | `其他比赛/` | 几何计算 | - |
+| UVA221 | Urban Elevations 城市海拔 | `其他比赛/` | 投影区间 | - |
+| UVA222 | Budget 预算 | `其他比赛/` | 模拟 | - |
+| UVA224 | Parallelepiped Walk 平行六面体行走 | `其他比赛/` | 模拟+set | - |
 | UVA11367 | UVA11367 | `其他比赛/` | - | - |
 | P13109 | P13109 | `其他比赛/` | - | - |
 | P4552 | P4552 | `其他比赛/` | - | - |
