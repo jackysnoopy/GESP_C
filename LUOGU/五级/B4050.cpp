@@ -1,42 +1,53 @@
 #include <iostream>
 #include <vector>
-#include <climits>
 #include <cmath>
 using namespace std;
+
+// 判断是否为质数
+bool isPrime(int n) {
+    if (n < 2) return false;
+    for (int i = 2; i * i <= n; i++) {
+        if (n % i == 0) return false;
+    }
+    return true;
+}
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    
     int t;
     cin >> t;
-    vector<int> primes;
-    for (int i = 2; i <= 100000; i++) {
-        bool ok = true;
-        for (int j = 2; j * j <= i; j++) {
-            if (i % j == 0) { ok = false; break; }
-        }
-        if (ok) primes.push_back(i);
-    }
+    
     while (t--) {
         int h;
         cin >> h;
-        vector<int> dp(h + 1, INT_MAX);
-        dp[0] = 0;
-        for (int i = 1; i <= h; i++) {
-            int p2 = 1;
-            for (int k = 1; p2 <= i; k++) {
-                if (dp[i - p2] != INT_MAX)
-                    dp[i] = min(dp[i], dp[i - p2] + k);
-                p2 *= 2;
+        
+        int ans = -1;
+        
+        // 枚举物理攻击次数 k
+        for (int k = 1; k <= 60; k++) {
+            long long physicalDamage = (1LL << k) - 1; // 2^k - 1
+            
+            if (physicalDamage > h) break;
+            
+            // 不使用魔法攻击的情况
+            if (physicalDamage == h) {
+                ans = k;
+                break;
+            }
+            
+            // 使用魔法攻击的情况
+            int magicDamage = h - physicalDamage;
+            if (magicDamage > 0 && isPrime(magicDamage)) {
+                if (ans == -1 || k + 1 < ans) {
+                    ans = k + 1; // k次物理 + 1次魔法
+                }
             }
         }
-        int ans = dp[h];
-        for (int p : primes) {
-            if (p > h) break;
-            if (dp[h - p] != INT_MAX)
-                ans = min(ans, dp[h - p] + 1);
-        }
-        cout << (ans == INT_MAX ? -1 : ans) << "\n";
+        
+        cout << ans << "\n";
     }
+    
     return 0;
 }
