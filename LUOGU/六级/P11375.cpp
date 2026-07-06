@@ -34,6 +34,6 @@ int main() {
         }
     }
     
-    cout << cur << "\n";
+    cout << cur << endl;
     return 0;
 }

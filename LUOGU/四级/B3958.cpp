@@ -46,7 +46,7 @@ int main() {
     while (T--) {
         string a, b;
         cin >> a >> b;
-        cout << (similar(a, b) ? "similar\n" : "not similar\n");
+        cout << (similar(a, b) ? "similar" : "not similar")<<endl;
     }
     return 0;
 }

@@ -27,9 +27,9 @@ int main() {
     }
 
     if (total == min_sum) {
-        cout << max_sum << "\n";
+        cout << max_sum << endl;
     } else {
-        cout << max(max_sum, total - min_sum) << "\n";
+        cout << max(max_sum, total - min_sum) << endl;
     }
 
     return 0;

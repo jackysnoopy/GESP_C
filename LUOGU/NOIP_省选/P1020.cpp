@@ -23,6 +23,6 @@ int main() {
         if (it == piles.end()) piles.push_back(h[i]);
         else *it = h[i];
     }
-    cout << piles.size() << "\n";
+    cout << piles.size() << endl;
     return 0;
 }

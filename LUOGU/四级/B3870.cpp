@@ -24,6 +24,6 @@ int main() {
         cout << char(hi < 10 ? '0' + hi : 'A' + hi - 10);
         cout << char(lo < 10 ? '0' + lo : 'A' + lo - 10);
     }
-    cout << "\n";
+    cout << endl;
     return 0;
 }

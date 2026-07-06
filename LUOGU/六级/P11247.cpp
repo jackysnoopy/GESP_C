@@ -36,7 +36,7 @@ int main() {
             if (sum >= k) break;
         }
         if (sum < k) {
-            cout << -1 << '\n';
+            cout << -1 << endl;
             return 0;
         }
         rem[t] = (ll)groups[t].size() - c[t];
@@ -50,7 +50,7 @@ int main() {
     }
     
     if (mx <= total - mx + 1) {
-        cout << total << '\n';
+        cout << total << endl;
         return 0;
     }
     
@@ -61,9 +61,9 @@ int main() {
     }
     
     if (extra >= need) {
-        cout << total + need << '\n';
+        cout << total + need << endl;
     } else {
-        cout << -1 << '\n';
+        cout << -1 << endl;
     }
     
     return 0;

@@ -33,7 +33,7 @@ int main() {
                 if (ok) found = true;
             }
         }
-        cout << (found ? "Yes\n" : "No\n");
+        cout << (found ? "Yes" : "No")<<endl;
     }
     return 0;
 }

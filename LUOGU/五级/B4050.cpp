@@ -1,53 +1,26 @@
-#include <iostream>
-#include <vector>
-#include <cmath>
+#include<bits/stdc++.h>  
 using namespace std;
-
-// 判断是否为质数
-bool isPrime(int n) {
-    if (n < 2) return false;
-    for (int i = 2; i * i <= n; i++) {
-        if (n % i == 0) return false;
-    }
-    return true;
+bool zs(int a){
+	if(a==1)return 0;
+	for(int i=2;i<=sqrt(a);i++){
+		if(a%i==0)return 0;
+	}
+	return 1;
 }
-
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    
+int main(){
     int t;
-    cin >> t;
-    
-    while (t--) {
-        int h;
-        cin >> h;
-        
-        int ans = -1;
-        
-        // 枚举物理攻击次数 k
-        for (int k = 1; k <= 60; k++) {
-            long long physicalDamage = (1LL << k) - 1; // 2^k - 1
-            
-            if (physicalDamage > h) break;
-            
-            // 不使用魔法攻击的情况
-            if (physicalDamage == h) {
-                ans = k;
-                break;
-            }
-            
-            // 使用魔法攻击的情况
-            int magicDamage = h - physicalDamage;
-            if (magicDamage > 0 && isPrime(magicDamage)) {
-                if (ans == -1 || k + 1 < ans) {
-                    ans = k + 1; // k次物理 + 1次魔法
-                }
-            }
-        }
-        
-        cout << ans << "\n";
-    }
-    
+    cin>>t;
+    int h;
+    while(t){
+    	t--;
+    	cin>>h;
+    	if(zs(h)){cout<<1<<endl;continue;}
+    	for(int i=1;i>=1;i++){
+    		h-=pow(2,i-1);
+    		if(h<0){cout<<-1<<endl;break;}
+    		if(h==0){cout<<i<<endl;break;}
+    		if(h>0&&zs(h)){cout<<i+1<<endl;break;}
+		}
+	}
     return 0;
 }

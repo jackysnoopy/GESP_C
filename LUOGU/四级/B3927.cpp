@@ -33,6 +33,6 @@ int main() {
         if (dict.count(word)) cout << dict[word];
         else cout << "UNK";
     }
-    cout << "\n";
+    cout << endl;
     return 0;
 }

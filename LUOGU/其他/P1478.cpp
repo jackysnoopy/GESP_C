@@ -20,6 +20,6 @@ int main() {
         if (s >= app[i].c) { s -= app[i].c; ans++; }
         else break;
     }
-    cout << ans << "\n";
+    cout << ans << endl;
     return 0;
 }

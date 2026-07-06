@@ -25,6 +25,6 @@ int main() {
         ans = max(ans, cur);
     }
     
-    cout << ans << '\n';
+    cout << ans << endl;
     return 0;
 }

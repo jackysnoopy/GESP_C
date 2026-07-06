@@ -18,7 +18,7 @@ int main() {
             else val = c - 'A' + 10;
             ans = ans * K + val;
         }
-        cout << ans << "\n";
+        cout << ans << endl;
     }
     return 0;
 }

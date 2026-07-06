@@ -1,40 +1,41 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 
+bool can(int x, const vector<int>& A) {
+    vector<int> B;
+    for (int v : A) {
+        if (v > x) B.push_back(v);
+    }
+    
+    for (int i = 0; i < (int)B.size(); i += 2) {
+        if (B[i] != B[i + 1]) return false;
+    }
+    return true;
+}
+
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+    
     int N;
     cin >> N;
     vector<int> A(N);
-    vector<pair<int,int>> pos(N / 2 + 1);
-    vector<int> first_occ(N / 2 + 1, -1);
     for (int i = 0; i < N; i++) {
         cin >> A[i];
-        if (first_occ[A[i]] == -1) first_occ[A[i]] = i;
-        else pos[A[i]] = {first_occ[A[i]], i};
     }
-    auto check = [&](int limit) -> bool {
-        vector<int> a = A;
-        for (int v = 1; v <= N / 2; v++) {
-            int l = pos[v].first, r = pos[v].second;
-            if (r - l <= 1) continue;
-            if (A[l] > limit && A[r] > limit) return false;
-            int move_idx = (A[r] <= limit) ? r : l;
-            int target = (move_idx == r) ? l : r;
-            a.erase(a.begin() + move_idx);
-            // update positions
+
+    int maxA = *max_element(A.begin(), A.end());
+
+
+    int left = 1, right = maxA, ans = maxA;
+    while (left <= right) {
+        int mid = (left + right) / 2;
+        if (can(mid,A)) {
+            ans = mid;
+            right = mid - 1;
+        } else {
+            left = mid + 1;
         }
-        return true;
-    };
-    int lo = 0, hi = 1000000000;
-    while (lo < hi) {
-        int mid = (lo + hi) / 2;
-        if (check(mid)) hi = mid;
-        else lo = mid + 1;
     }
-    cout << lo << "\n";
+
+    cout << ans <<endl;
     return 0;
 }

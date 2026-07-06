@@ -10,11 +10,14 @@ int main() {
     cin >> n >> m;
     vector<long long> c(n);
     for (int i = 0; i < n; i++) cin >> c[i];
-    long long sum_pos = 0;
+    long long sum_pos = 0, sum_all = 0;
     for (int i = 0; i < m; i++) {
         int a; cin >> a;
+        sum_all += a;
         if (a > 0) sum_pos += a;
     }
-    cout << *max_element(c.begin(), c.end()) + sum_pos << "\n";
+    long long mx = *max_element(c.begin(), c.end());
+    if (n == 1) cout << mx + sum_all << "\n";
+    else cout << mx + sum_pos << "\n";
     return 0;
 }

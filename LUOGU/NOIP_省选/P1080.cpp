@@ -71,7 +71,7 @@ int main() {
     
     for (int i = (int)ans.size() - 1; i >= 0; i--)
         cout << ans[i];
-    cout << "\n";
+    cout << endl;
     
     return 0;
 }

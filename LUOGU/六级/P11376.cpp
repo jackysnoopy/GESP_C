@@ -1,60 +1,84 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cmath>
+#include <bits/stdc++.h>
 using namespace std;
+using ll = long long;
+
+struct Station {
+    ll p, c;
+};
+
+struct Truck {
+    ll a, b;
+    ll diff;
+};
 
 int main() {
     ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+    cin.tie(0);
 
     int n, m;
-    long long x;
+    ll x;
     cin >> n >> m >> x;
 
-    vector<pair<long long, int>> stations(n);
-    for (int i = 0; i < n; i++) {
-        cin >> stations[i].first >> stations[i].second;
+    vector<Station> stations(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> stations[i].p >> stations[i].c;
     }
 
-    vector<long long> d(m);
-    long long sum_b = 0;
-    for (int i = 0; i < m; i++) {
-        long long a, b;
+    vector<Truck> pos, neg, zero;
+    for (int i = 0; i < m; ++i) {
+        ll a, b;
         cin >> a >> b;
-        d[i] = a - b;
-        sum_b += b;
+        if (a > b) pos.push_back({a, b, a - b});
+        else if (a < b) neg.push_back({a, b, a - b});
+        else zero.push_back({a, b, 0});
     }
 
-    // 展开站点容量
-    vector<long long> p_vals;
-    for (auto &st : stations) {
-        for (int k = 0; k < st.second; k++) {
-            p_vals.push_back(st.first);
-        }
+    // 正差值：从大到小排序，分配到最小的p
+    sort(pos.begin(), pos.end(), [](const Truck& t1, const Truck& t2) {
+        return t1.diff > t2.diff;
+    });
+    
+    // 负差值：从小到大排序（即b-a从大到小），分配到最大的p
+    sort(neg.begin(), neg.end(), [](const Truck& t1, const Truck& t2) {
+        return t1.diff < t2.diff; // 更负的优先（b-a更大）
+    });
+
+    sort(stations.begin(), stations.end(), [](const Station& s1, const Station& s2) {
+        return s1.p < s2.p;
+    });
+
+    ll ans = 0;
+    int l = 0, r = n - 1;
+    
+    // 分配正差值到小p
+    int pi = 0;
+    while (pi < pos.size()) {
+        while (l <= r && stations[l].c == 0) l++;
+        if (l > r) break;
+        ll cost = 2 * pos[pi].a * stations[l].p + 
+                  2 * pos[pi].b * (x - stations[l].p);
+        ans += cost;
+        stations[l].c--;
+        pi++;
     }
 
-    sort(d.begin(), d.end());
-    sort(p_vals.begin(), p_vals.end());
-
-    int ld = 0, rd = m - 1;
-    int lp = 0, rp = (int)p_vals.size() - 1;
-    long long sum_dp = 0;
-
-    while (ld <= rd) {
-        if (llabs(d[ld]) > llabs(d[rd]) || d[ld] + d[rd] < 0) {
-            sum_dp += d[ld] * p_vals[rp];
-            ld++;
-            rp--;
-        } else {
-            sum_dp += d[rd] * p_vals[lp];
-            rd--;
-            lp++;
-        }
+    // 分配负差值到大p
+    int ni = 0;
+    while (ni < neg.size()) {
+        while (l <= r && stations[r].c == 0) r--;
+        if (l > r) break;
+        ll cost = 2 * neg[ni].a * stations[r].p + 
+                  2 * neg[ni].b * (x - stations[r].p);
+        ans += cost;
+        stations[r].c--;
+        ni++;
     }
 
-    long long ans = 2 * x * sum_b + 2 * sum_dp;
-    cout << ans << "\n";
+    // diff == 0 的货车
+    for (auto& t : zero) {
+        ans += 2 * t.a * x;
+    }
 
+    cout << ans << endl;
     return 0;
 }

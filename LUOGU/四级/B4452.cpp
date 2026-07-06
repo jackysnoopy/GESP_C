@@ -35,7 +35,7 @@ int main() {
     
     sort(bought.begin(), bought.end());
     for (const auto& name : bought)
-        cout << name << '\n';
+        cout << name << endl;
     
     return 0;
 }

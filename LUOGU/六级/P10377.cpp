@@ -29,7 +29,7 @@ int main() {
         ans = min(ans, pos);
     } while (next_permutation(perm.begin(), perm.end()));
     
-    cout << ans << '\n';
+    cout << ans << endl;
     
     return 0;
 }

@@ -18,6 +18,6 @@ int main() {
     long long ans = 0;
     for (int i = 0; i < n; i++) ans += b[diff[i].second];
     for (int i = n; i < sz; i++) ans += c[diff[i].second];
-    cout << ans << "\n";
+    cout << ans << endl;
     return 0;
 }

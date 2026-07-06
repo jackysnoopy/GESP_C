@@ -16,6 +16,6 @@ int main() {
         a[i + 1] += diff;
         if (diff != 0) ans++;
     }
-    cout << ans << "\n";
+    cout << ans << endl;
     return 0;
 }

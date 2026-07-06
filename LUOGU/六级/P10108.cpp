@@ -27,6 +27,6 @@ int main() {
         dp[i] = b[i] + best;
     }
 
-    cout << dp[0] << "\n";
+    cout << dp[0] << endl;
     return 0;
 }

@@ -14,6 +14,6 @@ int main() {
         cur = max((long long)x, cur + x);
         ans = max(ans, cur);
     }
-    cout << ans << "\n";
+    cout << ans << endl;
     return 0;
 }

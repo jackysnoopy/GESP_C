@@ -1,37 +1,49 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <unordered_set>
-#include <cmath>
+#include <bits/stdc++.h>
 using namespace std;
+using ll = long long;
 
+const int MAXP = 31623;
 vector<int> primes;
+bool isComposite[MAXP + 1];
 
-void sieve(int n) {
-    vector<bool> is_prime(n + 1, true);
-    for (int i = 2; i <= n; i++) {
-        if (is_prime[i]) primes.push_back(i);
+void initPrimes() {
+    for (int i = 2; i <= MAXP; ++i) {
+        if (!isComposite[i]) primes.push_back(i);
         for (int p : primes) {
-            if (i * p > n) break;
-            is_prime[i * p] = false;
+            if (i * p > MAXP) break;
+            isComposite[i * p] = true;
             if (i % p == 0) break;
         }
     }
 }
 
-int spf(int x) {
+int getMinPrimeFactor(int n) {
     for (int p : primes) {
-        if (p * p > x) break;
-        if (x % p == 0) return p;
+        if (p * p > n) break;
+        if (n % p == 0) return p;
     }
-    return x;
+    return n;
+}
+
+int getParent(int n) {
+    if (n == 1) return 0;
+    return n / getMinPrimeFactor(n);
+}
+
+int getDepth(int n) {
+    int depth = 0;
+    while (n > 1) {
+        n = getParent(n);
+        depth++;
+    }
+    return depth;
 }
 
 int main() {
     ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+    cin.tie(0);
     
-    sieve(31623);
+    initPrimes();
     
     int q;
     cin >> q;
@@ -39,31 +51,33 @@ int main() {
         int x, y;
         cin >> x >> y;
         
-        unordered_set<int> path;
-        int dep_x = 0, cur = x;
-        while (cur > 1) {
-            path.insert(cur);
-            cur /= spf(cur);
-            dep_x++;
+        // 记录x的路径
+        unordered_set<int> pathX;
+        int temp = x;
+        while (temp > 1) {
+            pathX.insert(temp);
+            temp = getParent(temp);
         }
-        path.insert(1);
+        pathX.insert(1);
         
-        int dep_y = 0;
-        cur = y;
-        while (!path.count(cur)) {
-            cur /= spf(cur);
-            dep_y++;
-        }
-        int lca = cur;
-        
-        int dep_lca = 0;
-        cur = lca;
-        while (cur > 1) {
-            cur /= spf(cur);
-            dep_lca++;
+        // 找y的路径中第一个出现在x路径中的节点
+        temp = y;
+        int lca = 1;
+        while (temp >= 1) {
+            if (pathX.count(temp)) {
+                lca = temp;
+                break;
+            }
+            if (temp == 1) break;
+            temp = getParent(temp);
         }
         
-        cout << dep_x + dep_y - 2 * dep_lca << '\n';
+        // 计算深度
+        int depthX = getDepth(x);
+        int depthY = getDepth(y);
+        int depthLCA = getDepth(lca);
+        
+        cout << depthX + depthY - 2 * depthLCA << endl;
     }
     
     return 0;

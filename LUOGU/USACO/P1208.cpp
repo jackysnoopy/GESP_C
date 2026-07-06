@@ -20,6 +20,6 @@ int main() {
         cost += (long long)take * farmers[i].first;
         need -= take;
     }
-    cout << cost << "\n";
+    cout << cost << endl;
     return 0;
 }

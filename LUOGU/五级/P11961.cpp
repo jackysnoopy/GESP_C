@@ -33,13 +33,13 @@ int main() {
     while (T--) {
         long long a, p;
         cin >> a >> p;
-        if (qpow(a, p - 1, p) != 1) { cout << "No\n"; continue; }
+        if (qpow(a, p - 1, p) != 1) { cout << "No"<<endl; continue; }
         auto factors = get_factors(p - 1);
         bool ok = true;
         for (auto q : factors) {
             if (qpow(a, (p - 1) / q, p) == 1) { ok = false; break; }
         }
-        cout << (ok ? "Yes" : "No") << "\n";
+        cout << (ok ? "Yes" : "No") << endl;
     }
     return 0;
 }

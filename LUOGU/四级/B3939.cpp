@@ -17,7 +17,7 @@ int main() {
     for (int i = A; i <= B; i++) {
         int rev = (i % 10) * 10 + (i / 10);
         if (isPrime(i) && isPrime(rev)) {
-            cout << i << "\n";
+            cout << i << endl;
         }
     }
     return 0;

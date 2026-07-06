@@ -61,6 +61,6 @@ int main() {
         ans[u - 1] = '0' + fc;
     }
     
-    cout << ans << "\n";
+    cout << ans << endl;
     return 0;
 }

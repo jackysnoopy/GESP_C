@@ -41,7 +41,7 @@ int main() {
         else cout << cnt_odd;
         if (i < n) cout << " ";
     }
-    cout << "\n";
+    cout << endl;
 
     return 0;
 }

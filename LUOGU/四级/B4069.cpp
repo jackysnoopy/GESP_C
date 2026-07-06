@@ -21,7 +21,7 @@ int main() {
             }
         }
         if (!ok) {
-            cout << "0\n";
+            cout << "0"<<endl;
             continue;
         }
         sort(s.begin(), s.end(), [](const string &a, const string &b) {
@@ -38,7 +38,7 @@ int main() {
                 break;
             }
         }
-        cout << (ok ? "1\n" : "0\n");
+        cout << (ok ? "1" : "0")<<endl;
     }
     return 0;
 }

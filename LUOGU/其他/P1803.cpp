@@ -16,6 +16,6 @@ int main() {
     for (int i = 0; i < n; i++) {
         if (seg[i].first >= last) { ans++; last = seg[i].second; }
     }
-    cout << ans << "\n";
+    cout << ans << endl;
     return 0;
 }

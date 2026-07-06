@@ -17,6 +17,6 @@ int main() {
         else r--;
         groups++;
     }
-    cout << groups << "\n";
+    cout << groups << endl;
     return 0;
 }

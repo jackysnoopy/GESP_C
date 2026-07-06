@@ -27,6 +27,6 @@ int main() {
         }
         fromTop = !fromTop;
     }
-    cout << ans << "\n";
+    cout << ans << endl;
     return 0;
 }

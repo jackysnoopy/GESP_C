@@ -42,7 +42,7 @@ int main() {
     };
     
     dfs(1);
-    cout << f[1] << '\n';
+    cout << f[1] << endl;
     
     return 0;
 }

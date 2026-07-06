@@ -16,6 +16,6 @@ int main() {
     });
     string result;
     for (int i = 0; i < n; i++) result += a[i];
-    cout << result << "\n";
+    cout << result << endl;
     return 0;
 }
